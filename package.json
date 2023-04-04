@@ -5,17 +5,52 @@
   "license": "MIT",
   "scripts": {
     "test": "cypress run --browser chrome",
-    "run": "test",
-    "test:chrome": "cypress run --browser chrome",
-    "format": "prettier-standard 'cypress/*/.js'",
-    "lint": "standard 'cypress/*/.js'"
+    "compress:open": "cypress open --browser chrome",
+    "format": "prettier-standard './**/*.{json,js,md}'",
+    "format:check": "prettier-standard --check './**/*.{json,js,md}'",
+    "lint": "eslint --fix './**/*.js'",
+    "lint:check": "eslint './**/*.js'"
   },
   "dependencies": {
     "cypress": "^12.9.0",
-    "cypress-grep": "^3.0.4",
-    "cypress-promise": "^1.1.0"
+    "cypress-grep": "^3.0.4"
   },
   "engines": {
     "node": ">=12.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-chai-friendly": "^0.5.0",
+    "eslint-plugin-cypress": "^2.9.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-mocha": "^6.3.0",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.7",
+    "prettier-standard": "^16.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{html,css,less,ejs}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

@@ -1,67 +1,57 @@
-import promisify from "cypress-promise";
-import { getPriceFromText } from "../../utils/format/numerical";
+import { getPriceFromText } from '../../utils/format/numerical';
 
-describe(`Test Amazon cart application`, async () => {
+describe('Test Amazon cart application', () => {
   beforeEach(() => {
-    cy.visit(Cypress.env("AMAZON_URL"));
+    cy.visit(Cypress.env('AMAZON_URL'));
   });
 
-  it("TC-1| verify that we are able to add an item into our cart", () => {
-    cy.get("#twotabsearchtextbox").type("pedra");
-    cy.get("#nav-search-submit-button").click();
-    cy.get(".a-link-normal .a-section .s-image").first().click();
-    cy.get("#add-to-cart-button").click();
-    cy.get("#nav-cart-count")
-      .invoke("text")
-      .then((text) => {
-        expect(text.trim()).equal("1");
-      })
-      .end();
-  });
+  it(
+    'TC-1| Check if you can add an item to cart',
+    { tags: ['@amazon', '@cart'] },
+    () => {
+      cy.searchProduct('pedra');
+      cy.clickAddToCart();
 
-  it("TC-2| Check that the sum of items added to cart is correct", async () => {
-    const selectProduct = async (order) => {
-      cy.get(".a-link-normal .a-section .s-image").first(order).click();
+      cy.get('#nav-cart-count')
+        .invoke('text')
+        .then(text => {
+          expect(text.trim()).equal('1');
+        })
+        .end();
+    },
+  );
 
-      const price = await promisify(
-        cy
-          .get(
-            '#corePrice_feature_div > .a-section > .a-price.aok-align-center > [aria-hidden="true"]'
-          )
-          .then(($el) => getPriceFromText($el.text()))
-      );
+  it(
+    'TC-2| Check that the sum of items added to cart is correct',
+    { tags: ['@amazon', '@cart'] },
+    () => {
+      cy.searchProduct('pedra');
+      cy.clickAddToCart();
 
-      return { price };
-    };
+      cy.searchProduct('papel');
+      cy.clickAddToCart();
 
-    const products = [];
+      cy.searchProduct('tesoura');
+      cy.clickAddToCart();
 
-    cy.get("#twotabsearchtextbox").type("pedra");
-    cy.get("#nav-search-submit-button").click();
-    products[0] = await selectProduct("first");
-    cy.get("#add-to-cart-button").click();
+      cy.get('#nav-cart').click();
 
-    cy.get("#twotabsearchtextbox").type("papel");
-    cy.get("#nav-search-submit-button").click();
-    products[1] = await selectProduct("second");
-    cy.get("#add-to-cart-button").click();
-
-    cy.get("#twotabsearchtextbox").type("tesoura");
-    cy.get("#nav-search-submit-button").click();
-    products[2] = await selectProduct("first");
-    cy.get("#add-to-cart-button").click();
-
-    const prices = products.map(({ price }) => price);
-    const total = prices.reduce((a, b) => a + b);
-
-    cy.get("#nav-cart").click();
-
-    const result = await promisify(
-      cy
-        .get("#sc-subtotal-amount-buybox > .a-size-medium")
-        .then(($el) => $el.text())
-    );
-
-    expect(getPriceFromText(result.trim())).to.equal(total);
-  });
+      cy.get(
+        '.sc-list-item-content > .a-grid-vertical-align > :nth-child(2) > .a-unordered-list > .sc-item-price-block > .a-spacing-mini > .a-size-medium',
+      )
+        .should('have.length.greaterThan', 0)
+        .then($prices => {
+          let prices = Cypress._.map($prices, el => el.innerText);
+          prices = Cypress._.map(prices, getPriceFromText);
+          return Cypress._.sum(prices);
+        })
+        .then(sumValues => {
+          cy.get('#sc-subtotal-amount-buybox > .a-size-medium')
+            .then(el => el.text())
+            .then(getPriceFromText)
+            .should('eq', sumValues);
+        })
+        .end();
+    },
+  );
 });

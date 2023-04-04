@@ -1,9 +1,9 @@
-name: Node.js CI
+name: Tests
 
 on: push
 
 jobs:
-  push-teste:
+  exec-default:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout 🛎
@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 14
 
-      - name: Open Weather Tests 🌡️
+      - name: Running 🌡️
         uses: cypress-io/github-action@v4.1.0
         env:
           CYPRESS_APP_ID: ${{secrets.OPEN_WEATHER_API_KEY}}

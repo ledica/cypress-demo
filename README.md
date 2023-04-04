@@ -1,5 +1,12 @@
 # cypress-demo
 
+## Dependencies
+
+Add your personal open weather api key at cypress.env.json as `APP_ID`
+
+## Install
+`npm install` or `yarn install`
+
 ## **Test Scenario**:  Test Amazon cart application
 
 | Test Case Number | Test Case |
@@ -25,15 +32,9 @@
 |TC03| GET `/weather` - No Location - 400 |
 |TC04| GET `/weather` - Invalid APP ID - 401 |
 
-## Install
-
-`npm install` or `yarn install`
-
-
 ## Run tests
 **CLI** - Run CLI
 
- 
 ```
 npx cypress run
 ```
@@ -41,8 +42,4 @@ npx cypress run
  
 ```
 yarn || npm test:chrome
-```
-
-## Technology:
- - Cypress 
- - OpenWeather API
+``

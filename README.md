@@ -27,12 +27,6 @@ Run the following command to launch Cypress
 yarn cypress:open
 ```
 
-You also can run a specific test using this command:
-
-```
-yarn test --env grep=[name _of _your _test_target]
-```
-
 ## **Test Scenario**: Test Amazon cart application
 
 | Test Case Number | Test Case                                            |

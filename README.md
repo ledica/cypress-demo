@@ -1,9 +1,5 @@
 # cypress-demo
 
-## Dependencies
-
-Add your personal open weather api key `APP_ID` at `cypress.env.json`
-
 ## Installation
 
 ```
@@ -43,9 +39,9 @@ yarn test --env grepTags=@account
 | Test Case Number | Test Case                                 |
 | ---------------- | ----------------------------------------- |
 | TC01             | Filling in all the data                   |
-| TC02             | Error should occur if the name is empty   |
-| TC03             | Error should occur if an invalid email    |
-| TC04             | Error should occur if an invalid password |
+| TC02             | Name is empty   |
+| TC03             | Invalid email    |
+| TC04             | Invalid password |
 
 ```
 yarn test --env grepTags=@cart

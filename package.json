@@ -1,0 +1,21 @@
+{
+  "name": "cypress-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "cypress run --browser chrome",
+    "run": "test",
+    "test:chrome": "cypress run --browser chrome",
+    "format": "prettier-standard 'cypress/*/.js'",
+    "lint": "standard 'cypress/*/.js'"
+  },
+  "dependencies": {
+    "cypress": "^12.9.0",
+    "cypress-grep": "^3.0.4",
+    "cypress-promise": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}

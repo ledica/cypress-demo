@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "cypress run --browser chrome",
-    "compress:open": "cypress open --browser chrome",
+    "test": "cypress run",
+    "start": "cypress run",
+    "compress:open": "cypress open",
     "format": "prettier-standard './**/*.{json,js,md}'",
     "format:check": "prettier-standard --check './**/*.{json,js,md}'",
     "lint": "eslint --fix './**/*.js'",

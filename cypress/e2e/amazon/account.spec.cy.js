@@ -1,7 +1,8 @@
 describe('Test the Amazon registration screen', () => {
   beforeEach(() => {
     cy.visit(Cypress.env('AMAZON_URL'));
-    cy.loadAccountForm();
+    cy.get('#nav-link-accountList-nav-line-1').click();
+    cy.get('#createAccountSubmit').click();
   });
 
   const name = 'John People';
@@ -9,14 +10,19 @@ describe('Test the Amazon registration screen', () => {
   const password = 'C4XkiUPZtI';
 
   it('TC-1| Filling in all the data', { tags: ['@amazon', '@account'] }, () => {
-    cy.setUserData({ name, email, password, passwordCheck: password });
+    cy.get('#ap_customer_name').type(name);
+    cy.get('#ap_email').type(email);
+    cy.get('#ap_password').type(password);
+    cy.get('#ap_password_check').type(password);
   });
 
   it(
     'TC-2| Error should occur if the name is not filled',
     { tags: ['@amazon', '@account'] },
     () => {
-      cy.setUserData({ email, password, passwordCheck: password });
+      cy.get('#ap_email').type(email);
+      cy.get('#ap_password').type(password);
+      cy.get('#ap_password_check').type(password);
 
       cy.get('#auth-continue').click();
       cy.get('[id="ap_customer_name"][class*="a-form-error"]').should('exist');
@@ -29,12 +35,10 @@ describe('Test the Amazon registration screen', () => {
     () => {
       const invalidEmail = 'exemplogmail.com';
 
-      cy.setUserData({
-        name,
-        email: invalidEmail,
-        password,
-        passwordCheck: password,
-      });
+      cy.get('#ap_customer_name').type(name);
+      cy.get('#ap_email').type(invalidEmail);
+      cy.get('#ap_password').type(password);
+      cy.get('#ap_password_check').type(password);
 
       cy.get('#auth-continue').click();
       cy.get('[id="ap_email"][class*="a-form-error"]').should('exist');
@@ -47,12 +51,10 @@ describe('Test the Amazon registration screen', () => {
     () => {
       const invalidPassword = 's';
 
-      cy.setUserData({
-        name,
-        email,
-        password: invalidPassword,
-        passwordCheck: invalidPassword,
-      });
+      cy.get('#ap_customer_name').type(name);
+      cy.get('#ap_email').type(email);
+      cy.get('#ap_password').type(invalidPassword);
+      cy.get('#ap_password_check').type(invalidPassword);
 
       cy.get('#auth-continue').click();
       cy.get('[id="ap_password"][class*="a-form-error"]').should('exist');

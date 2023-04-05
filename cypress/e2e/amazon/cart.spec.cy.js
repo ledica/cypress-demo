@@ -10,7 +10,8 @@ describe('Test Amazon cart application', () => {
     { tags: ['@amazon', '@cart'] },
     () => {
       cy.searchProduct('pedra');
-      cy.clickAddToCart();
+      cy.get('.a-link-normal .a-section .s-image').first().click();
+      cy.get('#add-to-cart-button').click();
 
       cy.get('#nav-cart-count')
         .invoke('text')
@@ -26,13 +27,16 @@ describe('Test Amazon cart application', () => {
     { tags: ['@amazon', '@cart'] },
     () => {
       cy.searchProduct('pedra');
-      cy.clickAddToCart();
+      cy.get('.a-link-normal .a-section .s-image').first().click();
+      cy.get('#add-to-cart-button').click();
 
       cy.searchProduct('papel');
-      cy.clickAddToCart();
+      cy.get('.a-link-normal .a-section .s-image').first().click();
+      cy.get('#add-to-cart-button').click();
 
       cy.searchProduct('tesoura');
-      cy.clickAddToCart();
+      cy.get('.a-link-normal .a-section .s-image').first().click();
+      cy.get('#add-to-cart-button').click();
 
       cy.get('#nav-cart').click();
 

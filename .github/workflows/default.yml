@@ -16,5 +16,12 @@ jobs:
 
       - name: Running 🌡️
         uses: cypress-io/github-action@v4.1.0
+        with:
+          env: grepTags=@openWeather
         env:
           CYPRESS_APP_ID: ${{secrets.OPEN_WEATHER_API_KEY}}
+
+      - name: Amazon Tests 🛍️
+        uses: cypress-io/github-action@v4.1.0
+        with:
+          env: grepTags=@amazon
